@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>카피바라의 여름방학 저축 계획</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: #f4f4f9;
+      color: #333;
+    }
+    h1 {
+      text-align: center;
+      color: #2c3e50;
+    }
+    h3 {
+      margin-top: 20px;
+      color: #34495e;
+    }
+    p, ul {
+      line-height: 1.6;
+    }
+    .box {
+      border: 2px solid #3498db;
+      padding: 15px;
+      margin: 10px 0;
+      background-color: #ecf0f1;
+      border-radius: 5px;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin: 20px 0;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    th, td {
+      border: 1px solid #7f8c8d;
+      padding: 12px;
+      text-align: center;
+      vertical-align: middle;
+      line-height: 1.5;
+    }
+    th {
+      background-color: #3498db;
+      color: white;
+      font-weight: bold;
+    }
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+    tr:hover {
+      background-color: #e0e0e0;
+    }
+    select, input[type="date"], input[type="number"], textarea, button {
+      padding: 8px;
+      margin: 5px;
+      border: 1px solid #bdc3c7;
+      border-radius: 4px;
+      font-size: 16px;
+      width: 100%;
+    }
+    button {
+      background-color: #2ecc71;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #27ae60;
+    }
+    .tabs {
+      overflow: hidden;
+      border-bottom: 1px solid #bdc3c7;
+    }
+    .tabs button {
+      background-color: inherit;
+      float: left;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      padding: 14px 16px;
+      transition: 0.3s;
+      font-size: 17px;
+    }
+    .tabs button:hover {
+      background-color: #ddd;
+    }
+    .tabs button.active {
+      background-color: #ccc;
+    }
+    .tabcontent {
+      display: none;
+      padding: 6px 12px;
+      border-top: none;
+    }
+    #alertBox {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      padding: 20px;
+      background-color: #e74c3c;
+      color: white;
+      border-radius: 5px;
+      text-align: center;
+      z-index: 1000;
+    }
+    @media (max-width: 600px) {
+      table, select, input, textarea, button {
+        font-size: 14px;
+        width: 95%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>카피바라의 여름방학 저축 계획</h1>
+  <p style="text-align: center;">대상 및 교과: 고3 금융일반 (난이도:하)</p>
+  
+  <h3>지문</h3>
+  <div class="box">
+    <p>상업 특성화고등학교에 재학 중인 카피바라는 여름방학을 맞아 저축 계획을 세우고자 한다. 매일 일정 금액을 저축하며, 목표 금액을 달성하고자 한다.</p>
+  </div>
+  
+  <h3>조건</h3>
+  <ul>
+    <li>시작 날짜: 2025년 7월 31일</li>
+    <li>종료 날짜: 2025년 8월 31일</li>
+    <li>목표 금액: 500,000원</li>
+  </ul>
+  
+  <h3>문제</h3>
+  <div class="box">
+    <p>7월 31일부터 8월 31일까지 32일 동안 매일 저축할 금액을 계산하고, 목표 금액(50만원)에 도달하는지 확인하시오. (단, 주어진 날짜 동안 매일 저축할 금액을 균등하게 나누어야 하며, 마지막 날에 목표 금액에 도달해야 한다.)</p>
+  </div>
+  
+  <h3>입력 설정</h3>
+  <div class="box">
+    <label for="startDate">시작 날짜:</label>
+    <select id="startDate">
+      <option value="2025-07-31">2025-07-31</option>
+      <option value="2025-08-01">2025-08-01</option>
+      <option value="2025-08-10">2025-08-10</option>
+    </select>
+    <br>
+    <label for="endDate">종료 날짜:</label>
+    <select id="endDate">
+      <option value="2025-08-31">2025-08-31</option>
+      <option value="2025-09-01">2025-09-01</option>
+      <option value="2025-09-10">2025-09-10</option>
+    </select>
+    <br>
+    <label for="savingsAmount">저축 금액:</label>
+    <select id="savingsAmount">
+      <option value="500000">500,000원</option>
+      <option value="600000">600,000원</option>
+      <option value="700000">700,000원</option>
+    </select>
+    <br>
+    <label for="timeLimit">문제 풀이 시간:</label>
+    <select id="timeLimit">
+      <option value="30">30초</option>
+      <option value="60">1분</option>
+      <option value="90">1분30초</option>
+      <option value="120">2분</option>
+    </select>
+    <br>
+    <button onclick="startProblem()">문제 풀기</button>
+  </div>
+  
+  <div id="ctProcess" style="display: none;">
+    <h3>컴퓨팅 사고 과정</h3>
+    <div class="tabs">
+      <button class="tablinks" onclick="openTab('tab1')">문제분해</button>
+      <button class="tablinks" onclick="openTab('tab2')">추상화</button>
+      <button class="tablinks" onclick="openTab('tab3')">패턴인식</button>
+      <button class="tablinks" onclick="openTab('tab4')">알고리즘</button>
+    </div>
+    
+    <div id="tab1" class="tabcontent">
+      <p>현재 상태와 목표 상태를 정의하세요.</p>
+      <input type="number" id="currentState" placeholder="현재 저축액 (원)" value="0">
+      <input type="number" id="targetState" placeholder="목표 저축액 (원)" value="">
+      <button onclick="nextTab('tab2')">다음</button>
+    </div>
+    
+    <div id="tab2" class="tabcontent">
+      <p>핵심 요소를 추출하세요.</p>
+      <input type="number" id="totalDays" placeholder="총 일수" value="">
+      <input type="number" id="targetAmountInput" placeholder="목표 금액 (원)" value="">
+      <button onclick="nextTab('tab3')">다음</button>
+    </div>
+    
+    <div id="tab3" class="tabcontent">
+      <p>저축 규칙을 찾아 입력하세요.</p>
+      <textarea id="patternRule" placeholder="예: 매일 저축액 = 목표 금액 / 총 일수"></textarea>
+      <button onclick="nextTab('tab4')">다음</button>
+    </div>
+    
+    <div id="tab4" class="tabcontent">
+      <p>저축 계획 절차를 나열하세요.</p>
+      <textarea id="algorithmSteps" placeholder="1. 총 일수 계산\n2. 일일 저축액 = 목표 / 일수\n3. 총 저축 = 일일 × 일수\n4. 목표 달성 확인"></textarea>
+      <button onclick="showResult()">결과 보기</button>
+    </div>
+    
+    <div id="result" style="display: none;">
+      <h3>결과</h3>
+      <table id="resultTable">
+        <tr><th>항목</th><th>값</th></tr>
+        <tr><td>시작 날짜</td><td id="startDateResult"></td></tr>
+        <tr><td>종료 날짜</td><td id="endDateResult"></td></tr>
+        <tr><td>총 일수</td><td id="resultDays"></td></tr>
+        <tr><td>일일 저축액</td><td id="dailySaving"></td></tr>
+        <tr><td>총 저축액</td><td id="totalSaving"></td></tr>
+        <tr><td>목표 달성 여부</td><td id="achievement"></td></tr>
+      </table>
+    </div>
+    
+    <p id="timer" style="display: none;">남은 시간: <span id="timeLeft"></span>초</p>
+  </div>
+  
+  <div id="alertBox">
+    <p>시간이 끝났습니다!</p>
+    <button onclick="restart()">다시 도전</button>
+  </div>
+  
+  <script>
+    let timerInterval;
+    
+    function startProblem() {
+      const startDate = document.getElementById('startDate').value;
+      const endDate = document.getElementById('endDate').value;
+      const savingsAmount = parseInt(document.getElementById('savingsAmount').value);
+      const timeLimit = parseInt(document.getElementById('timeLimit').value);
+      
+      if (new Date(startDate) > new Date(endDate)) {
+        alert('시작 날짜는 종료 날짜보다 앞서야 합니다.');
+        return;
+      }
+      
+      const totalDays = Math.ceil((new Date(endDate) - new Date(startDate)) / (1000 * 60 * 60 * 24)) + 1;
+      
+      document.getElementById('ctProcess').style.display = 'block';
+      document.getElementById('timer').style.display = 'block';
+      openTab('tab1');
+      
+      document.getElementById('targetState').value = savingsAmount;
+      document.getElementById('targetAmountInput').value = savingsAmount;
+      document.getElementById('totalDays').value = totalDays;
+      
+      let timeLeft = timeLimit;
+      document.getElementById('timeLeft').textContent = timeLeft;
+      
+      timerInterval = setInterval(() => {
+        timeLeft--;
+        document.getElementById('timeLeft').textContent = timeLeft;
+        if (timeLeft <= 0) {
+          clearInterval(timerInterval);
+          document.getElementById('alertBox').style.display = 'block';
+        }
+      }, 1000);
+    }
+    
+    function openTab(tabName) {
+      var i, tabcontent, tablinks;
+      tabcontent = document.getElementsByClassName("tabcontent");
+      for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+      }
+      tablinks = document.getElementsByClassName("tablinks");
+      for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+      }
+      document.getElementById(tabName).style.display = "block";
+      event.currentTarget.className += " active";
+    }
+    
+    function nextTab(nextTabId) {
+      openTab(nextTabId);
+    }
+    
+    function showResult() {
+      const currentState = parseInt(document.getElementById('currentState').value) || 0;
+      const targetState = parseInt(document.getElementById('targetState').value) || 0;
+      const totalDays = parseInt(document.getElementById('totalDays').value) || 0;
+      const targetAmount = parseInt(document.getElementById('targetAmountInput').value) || 0;
+      const patternRule = document.getElementById('patternRule').value;
+      const algorithmSteps = document.getElementById('algorithmSteps').value;
+      
+      if (!patternRule || !algorithmSteps) {
+        alert('규칙과 절차를 입력하세요.');
+        return;
+      }
+      
+      const dailySaving = targetAmount / totalDays;
+      const totalSaving = dailySaving * totalDays + currentState;
+      const achievement = totalSaving >= targetState ? "달성" : "미달성";
+      
+      document.getElementById('result').style.display = 'block';
+      document.getElementById('startDateResult').textContent = document.getElementById('startDate').value;
+      document.getElementById('endDateResult').textContent = document.getElementById('endDate').value;
+      document.getElementById('resultDays').textContent = totalDays + '일';
+      document.getElementById('dailySaving').textContent = Math.round(dailySaving).toLocaleString() + '원';
+      document.getElementById('totalSaving').textContent = Math.round(totalSaving).toLocaleString() + '원';
+      document.getElementById('achievement').textContent = achievement;
+    }
+    
+    function restart() {
+      clearInterval(timerInterval);
+      document.getElementById('alertBox').style.display = 'none';
+      document.getElementById('ctProcess').style.display = 'none';
+      document.getElementById('timer').style.display = 'none';
+      document.getElementById('result').style.display = 'none';
+      document.getElementById('startDate').selectedIndex = 0;
+      document.getElementById('endDate').selectedIndex = 0;
+      document.getElementById('savingsAmount').selectedIndex = 0;
+      document.getElementById('timeLimit').selectedIndex = 0;
+      document.getElementById('currentState').value = '0';
+      document.getElementById('targetState').value = '';
+      document.getElementById('totalDays').value = '';
+      document.getElementById('targetAmountInput').value = '';
+      document.getElementById('patternRule').value = '';
+      document.getElementById('algorithmSteps').value = '';
+    }
+  </script>
+</body>
+</html>

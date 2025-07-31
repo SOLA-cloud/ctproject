@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>카피바라의 대출 이자 구하기</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: #f4f4f9;
+      color: #333;
+    }
+    h1 {
+      text-align: center;
+      color: #2c3e50;
+    }
+    h3 {
+      margin-top: 20px;
+      color: #34495e;
+    }
+    p, ul {
+      line-height: 1.6;
+    }
+    .box {
+      border: 2px solid #3498db;
+      padding: 15px;
+      margin: 10px 0;
+      background-color: #ecf0f1;
+      border-radius: 5px;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin: 20px 0;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    th, td {
+      border: 1px solid #7f8c8d;
+      padding: 12px;
+      text-align: center;
+      vertical-align: middle;
+      line-height: 1.5;
+    }
+    th {
+      background-color: #3498db;
+      color: white;
+      font-weight: bold;
+    }
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+    tr:hover {
+      background-color: #e0e0e0;
+    }
+    select, input[type="number"], button {
+      padding: 8px;
+      margin: 5px;
+      border: 1px solid #bdc3c7;
+      border-radius: 4px;
+      font-size: 16px;
+    }
+    button {
+      background-color: #2ecc71;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #27ae60;
+    }
+    #alertBox {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      padding: 20px;
+      background-color: #e74c3c;
+      color: white;
+      border-radius: 5px;
+      text-align: center;
+      z-index: 1000;
+    }
+    @media (max-width: 600px) {
+      table, select, input, button {
+        font-size: 14px;
+        width: 95%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>카피바라의 대출 이자 구하기</h1>
+  <p style="text-align: center;">대상 및 교과: 고3 금융일반</p>
+  
+  <h3>지문</h3>
+  <div class="box">
+    <p>카피바라는 은행의 금융 상담원이다. 고객이 대출을 신청할 때, 대출 금액, 연 이자율, 상환 기간을 고려해 총 이자 비용을 최소화하는 최적의 상환 계획을 세워야 한다. 입력된 대출 금액과 기간에 따라 연 이자율을 선택해 총 이자 비용을 계산하시오.</p>
+  </div>
+  
+  <h3>조건</h3>
+  <ul>
+    <li>대출 금액: 500만원 이상</li>
+    <li>연 이자율: 1~3%</li>
+    <li>이자 계산: 복리 방식(연간)</li>
+    <li>상환 기간: 1~5년</li>
+    <li>상환 구조: 상환 기간 길어질수록 총 이자 증가, 월 상환액 감소</li>
+  </ul>
+  
+  <h3>문제</h3>
+  <p>카피바라는 고객이 대출을 신청했을 때 최적의 상환 계획을 세워야 한다. 입력된 대출 금액과 기간에 따라 연 이자율을 선택해 총 이자 비용을 계산하시오.</p>
+  
+  <h3>입력 설정</h3>
+  <div class="box">
+    <label for="loanAmount">대출 금액 (원, 최소 500만원):</label>
+    <input type="number" id="loanAmount" min="5000000" required>
+    <br>
+    <label for="years">상환 기간 (년):</label>
+    <select id="years">
+      <option value="1">1년</option>
+      <option value="2">2년</option>
+      <option value="3">3년</option>
+      <option value="4">4년</option>
+      <option value="5">5년</option>
+    </select>
+    <br>
+    <label for="interestRate">연 이자율:</label>
+    <select id="interestRate">
+      <option value="0.01">1%</option>
+      <option value="0.02">2%</option>
+      <option value="0.03">3%</option>
+    </select>
+    <br>
+    <label for="timeLimit">문제 풀이 시간:</label>
+    <select id="timeLimit">
+      <option value="30">30초</option>
+      <option value="60">1분</option>
+    </select>
+    <br>
+    <button onclick="startProblem()">문제 풀기</button>
+  </div>
+  
+  <div id="result" style="display: none;">
+    <h3>결과</h3>
+    <table id="resultTable">
+      <tr><th>항목</th><th>값</th></tr>
+      <tr><td>대출 금액</td><td id="loanAmountResult"></td></tr>
+      <tr><td>상환 기간</td><td id="yearsResult"></td></tr>
+      <tr><td>연 이자율</td><td id="rateResult"></td></tr>
+      <tr><td>총 이자 비용</td><td id="totalInterest"></td></tr>
+      <tr><td>월 상환액</td><td id="monthlyRepay"></td></tr>
+    </table>
+    <p id="timer">남은 시간: <span id="timeLeft"></span>초</p>
+  </div>
+  
+  <div id="alertBox">
+    <p>시간이 끝났습니다!</p>
+    <button onclick="restart()">다시 시작</button>
+  </div>
+  
+  <script>
+    let timerInterval;
+    
+    function startProblem() {
+      // 입력 유효성 검사
+      const loanAmount = parseInt(document.getElementById('loanAmount').value);
+      const years = parseInt(document.getElementById('years').value);
+      const rate = parseFloat(document.getElementById('interestRate').value);
+      const timeLimit = parseInt(document.getElementById('timeLimit').value);
+      
+      if (isNaN(loanAmount) || loanAmount < 5000000) {
+        alert('대출 금액은 500만원 이상이어야 합니다.');
+        return;
+      }
+      
+      // 결과 영역 표시
+      document.getElementById('result').style.display = 'block';
+      
+      // 계산
+      const totalInterest = loanAmount * (Math.pow(1 + rate, years) - 1);
+      const totalRepay = loanAmount + totalInterest;
+      const monthlyRepay = totalRepay / (years * 12);
+      
+      // 결과 출력
+      document.getElementById('loanAmountResult').textContent = loanAmount.toLocaleString() + '원';
+      document.getElementById('yearsResult').textContent = years + '년';
+      document.getElementById('rateResult').textContent = (rate * 100).toFixed(1) + '%';
+      document.getElementById('totalInterest').textContent = Math.round(totalInterest).toLocaleString() + '원';
+      document.getElementById('monthlyRepay').textContent = Math.round(monthlyRepay).toLocaleString() + '원';
+      
+      // 타이머 시작
+      let timeLeft = timeLimit;
+      document.getElementById('timeLeft').textContent = timeLeft;
+      
+      timerInterval = setInterval(() => {
+        timeLeft--;
+        document.getElementById('timeLeft').textContent = timeLeft;
+        if (timeLeft <= 0) {
+          clearInterval(timerInterval);
+          document.getElementById('alertBox').style.display = 'block';
+        }
+      }, 1000);
+    }
+    
+    function restart() {
+      clearInterval(timerInterval);
+      document.getElementById('alertBox').style.display = 'none';
+      document.getElementById('result').style.display = 'none';
+      document.getElementById('loanAmount').value = '';
+      document.getElementById('years').selectedIndex = 0;
+      document.getElementById('interestRate').selectedIndex = 0;
+      document.getElementById('timeLimit').selectedIndex = 0;
+    }
+  </script>
+</body>
+</html>
