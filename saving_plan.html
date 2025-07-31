@@ -3,121 +3,143 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>카피바라의 여름방학 저축 계획</title>
+  <title>📘 카피바라의 여름방학 저축 계획</title>
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Orbit&display=swap" rel="stylesheet">
   <style>
     body {
-      font-family: Arial, sans-serif;
-      max-width: 800px;
-      margin: 20px auto;
-      padding: 20px;
-      background-color: #f4f4f9;
-      color: #333;
+      font-family: 'Gowun Dodum', 'Orbit', sans-serif;
+      background: linear-gradient(to bottom right, #fefefe, #e8f0ff);
+      color: #2d3436;
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem;
+      box-shadow: 0 0 20px rgba(0,0,0,0.05);
+      border-radius: 16px;
     }
     h1 {
       text-align: center;
-      color: #2c3e50;
+      color: #2d3436;
+      font-size: 2.3rem;
+      margin-bottom: 1rem;
+    }
+    h1::before {
+      content: "💰 ";
     }
     h3 {
-      margin-top: 20px;
-      color: #34495e;
+      margin-top: 2.2rem;
+      color: #0984e3;
+      font-size: 1.2rem;
+    }
+    h3::before {
+      content: "📌 ";
     }
     p, ul {
-      line-height: 1.6;
+      line-height: 1.75;
+      font-size: 1rem;
     }
-    .box {
-      border: 2px solid #3498db;
-      padding: 15px;
-      margin: 10px 0;
-      background-color: #ecf0f1;
-      border-radius: 5px;
-    }
-    table {
-      border-collapse: collapse;
-      width: 100%;
-      margin: 20px 0;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    }
-    th, td {
-      border: 1px solid #7f8c8d;
-      padding: 12px;
-      text-align: center;
-      vertical-align: middle;
-      line-height: 1.5;
-    }
-    th {
-      background-color: #3498db;
-      color: white;
+    p.condition::before {
+      content: "📎 ";
       font-weight: bold;
     }
-    tr:nth-child(even) {
-      background-color: #f9f9f9;
+    p.question::before {
+      content: "❓ ";
+      font-weight: bold;
+    }
+    .box {
+      border-left: 5px solid #74b9ff;
+      background-color: #f1f2f6;
+      padding: 1.2rem;
+      border-radius: 10px;
+      margin-top: 1.2rem;
+    }
+    table {
+      width: 100%;
+      margin: 24px 0;
+      border-collapse: collapse;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    }
+    th, td {
+      padding: 14px;
+      border-bottom: 1px solid #dcdde1;
+      text-align: center;
+      font-size: 0.95rem;
+    }
+    th {
+      background-color: #74b9ff;
+      color: white;
     }
     tr:hover {
-      background-color: #e0e0e0;
+      background-color: #dfe6e9;
     }
-    select, input[type="date"], input[type="number"], textarea, button {
-      padding: 8px;
-      margin: 5px;
-      border: 1px solid #bdc3c7;
-      border-radius: 4px;
-      font-size: 16px;
+    select, input, textarea, button {
       width: 100%;
+      padding: 12px;
+      font-size: 1rem;
+      margin-top: 10px;
+      border: 1px solid #b2bec3;
+      border-radius: 8px;
     }
     button {
-      background-color: #2ecc71;
+      background-color: #00b894;
       color: white;
       border: none;
       cursor: pointer;
+      transition: background 0.3s ease;
     }
     button:hover {
-      background-color: #27ae60;
-    }
-    .tabs {
-      overflow: hidden;
-      border-bottom: 1px solid #bdc3c7;
+      background-color: #019875;
     }
     .tabs button {
-      background-color: inherit;
-      float: left;
+      background: none;
       border: none;
-      outline: none;
       cursor: pointer;
-      padding: 14px 16px;
-      transition: 0.3s;
-      font-size: 17px;
-    }
-    .tabs button:hover {
-      background-color: #ddd;
+      padding: 10px 14px;
+      margin-right: 4px;
+      background-color: #dfe6e9;
+      border-radius: 6px 6px 0 0;
     }
     .tabs button.active {
-      background-color: #ccc;
+      background-color: #b2bec3;
+      font-weight: bold;
     }
     .tabcontent {
-      display: none;
-      padding: 6px 12px;
+      background-color: white;
+      padding: 12px;
+      border: 1px solid #dfe6e9;
       border-top: none;
+      margin-bottom: 1.5rem;
     }
     #alertBox {
-      display: none;
       position: fixed;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      padding: 20px;
-      background-color: #e74c3c;
+      background: #d63031;
       color: white;
-      border-radius: 5px;
+      padding: 20px;
+      border-radius: 10px;
       text-align: center;
-      z-index: 1000;
+      display: none;
+      font-size: 1.1rem;
+    }
+    #timer {
+      font-weight: bold;
+      font-size: 1.2rem;
+      color: #e17055;
     }
     @media (max-width: 600px) {
-      table, select, input, textarea, button {
-        font-size: 14px;
-        width: 95%;
+      body {
+        padding: 1.2rem;
+      }
+      h1 {
+        font-size: 1.7rem;
       }
     }
   </style>
 </head>
+<body>
 <body>
   <h1>카피바라의 여름방학 저축 계획</h1>
   <p style="text-align: center;">대상 및 교과: 고3 금융일반 (난이도:하)</p>
